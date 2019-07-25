@@ -48,8 +48,21 @@ class Instructor extends Person {
     }
 
     grade(student, subject) {
-        console.log (`${this.name} says: ${student} receives a perfect score on ${subject}`);
+        console.log (`${this.name} says: ${student.name} receives a perfect score on ${subject}`);
     }
+
+    calculateGrade(student) {
+        let points = Math.ceil(Math.random() * 10);
+        
+        if (student.grade < 70) {
+            student.grade += points;
+            console.log(`${student.name} received ${points} extra points.  ${student.name}'s grade is now ${student.grade}`);
+        } else {
+            student.grade -= points;
+            console.log(`${student.name} lost ${points} points.  ${student.name}'s grade is now ${student.grade}`);
+        }
+    }
+
 
 }//end class Instructor
 
@@ -73,6 +86,7 @@ class Student extends Person {
         this.previousBackground = studentAttributes.previousBackground;
         this.className = studentAttributes.className;
         this.favSubjects = studentAttributes.favSubjects;
+        this.grade = studentAttributes.grade;
     }
 
     listSubjects() {
@@ -89,6 +103,16 @@ class Student extends Person {
 
     sprintChallenge(subject) {
         console.log(`${this.name} has begun sprint challenge on ${subject}`);
+    }
+
+    graduate(instructor) {
+        if(this.grade > 70) {
+            console.log(`Congratulations ${this.name} on successfully completing the program with ${this.grade}%!`);
+        }
+        else {
+            console.log(`I am sorry ${this.name} but you haven't met the graduation requirements. Keep working hard!`)
+            instructor.calculateGrade(this);
+        }
     }
 
 }//end class Student
@@ -117,7 +141,7 @@ class ProjectManager extends Instructor{
     }
 
     debugsCode(student, subject) {
-        console.log(`${this.name} debugs ${student}'s code on ${subject}`);
+        console.log(`${this.name} debugs ${student.name}'s code on ${subject}`);
 
     }
 
@@ -152,7 +176,8 @@ const instructorOne = new Instructor({
     favSubjects: [
         'HTML',
         'CSS'
-    ]
+    ],
+    grade: 50
     
   });
 
@@ -165,7 +190,8 @@ const instructorOne = new Instructor({
     favSubjects: [
         'JavaScript',
         'Java'
-    ]
+    ],
+    grade: 100
     
   });
 
@@ -202,11 +228,15 @@ const instructorOne = new Instructor({
   projectManagerOne.speak();
   projectManagerTwo.speak();
 
+  console.log("**************************************************************************************");
+
   //Instructor Class Methods
   instructorOne.demo('JavaScript');
   instructorTwo.demo('Data Science');
-  instructorOne.grade(studentOne.name, 'HTML');
-  instructorTwo.grade(studentTwo.name, 'CSS');
+  instructorOne.grade(studentOne, 'HTML');
+  instructorTwo.grade(studentTwo, 'CSS');
+
+  console.log("**************************************************************************************");
 
   //Student Class Methods
   studentOne.listSubjects();
@@ -216,11 +246,24 @@ const instructorOne = new Instructor({
   studentTwo.PRAssignment('Data Science');
   studentTwo.sprintChallenge('Python');
 
+  console.log("**************************************************************************************");
+
   //Project Manager Methods
   projectManagerOne.standUp('Channel 1');
   projectManagerTwo.standUp('Channel 2');
-  projectManagerOne.debugsCode(studentOne.name, 'LESS');
-  projectManagerTwo.debugsCode(studentTwo.name, 'CSS');
+  projectManagerOne.debugsCode(studentOne, 'LESS');
+  projectManagerTwo.debugsCode(studentTwo, 'CSS');
+
+  console.log("**************************************************************************************");
+
+  //STRETCH TASKS
+  instructorOne.calculateGrade(studentOne);  
+  projectManagerTwo.calculateGrade(studentTwo);
+
+  console.log("**************************************************************************************");
+
+  studentOne.graduate(instructorTwo);
+  studentTwo.graduate(instructorOne);
 
 
 
