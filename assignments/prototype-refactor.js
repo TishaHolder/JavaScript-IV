@@ -33,10 +33,11 @@ Prototype Refactor
   }*/
 
   class GameObject {
-      constructor(createdAt, name, dimensions) {
-          this.createdAt = createdAt;
-          this.name = name;
-          this.dimensions = dimensions;
+      constructor(gameObjectAttributes) {
+          this.createdAt = gameObjectAttributes.createdAt;
+          this.name = gameObjectAttributes.name;
+          this.dimensions =gameObjectAttributes.dimensions;
+
       }//end constructor
 
       destroy() {
@@ -69,11 +70,11 @@ function CharacterStats (characterAttributes) {
 }*/
   
 class CharacterStats extends GameObject {
-    constructor(createdAt, name, dimensions, healthPoints) {
+    constructor(characterStatsAttributes) {
         //pass common attributes (attributes inherited from parent class) back up to the constructor of the parent class
-        super(createdAt, name, dimensions);//grab all this stuff stuff from parent
+        super(characterStatsAttributes);//grab all this stuff stuff from parent
 
-        this.healthPoints = healthPoints;//initialize attributes not found in the parent class
+        this.healthPoints = characterStatsAttributes.healthPoints;//initialize attributes not found in the parent class
 
     }//end constructor
 
@@ -115,14 +116,14 @@ function Humanoid (humanoidAttributes) {
   }*/
 
   class Humanoid extends CharacterStats {
-      constructor( createdAt, name, dimensions, healthPoints, team, weapons, language) {
+      constructor( humanoidAttributes) {
           /*pass common attributes (attributes inherited from parent class) back up to the constructor of the parent class*/
-          super(createdAt, name, dimensions, healthPoints);
+          super(humanoidAttributes);
 
           //initialize attributes not found in the parent class
-          this.team = team;
-          this.weapons = weapons;
-          this.language = language;
+          this.team = humanoidAttributes.team;
+          this.weapons = humanoidAttributes.weapons;
+          this.language = humanoidAttributes.language;
 
       }//end constructor
 
@@ -135,9 +136,9 @@ function Humanoid (humanoidAttributes) {
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
 //arguments are passed in the same order they appear in the constructor
-const mage = new Humanoid(new Date(), 'Bruce', {length: 2, width: 1, height: 1}, 5, 'Mage Guild', ['Staff of Shamalama'], 'Common Tongue');
+//const mage = new Humanoid(new Date(), 'Bruce', {length: 2, width: 1, height: 1}, 5, 'Mage Guild', ['Staff of Shamalama'], 'Common Tongue');
 
-/*const mage = new Humanoid({
+const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
       length: 2,
@@ -151,12 +152,12 @@ const mage = new Humanoid(new Date(), 'Bruce', {length: 2, width: 1, height: 1},
       'Staff of Shamalama',
     ],
     language: 'Common Tongue',
-  });*/
+  });
   
   //arguments are passed in the same order they appear in the constructor
-  const swordsman = new Humanoid (new Date(), 'Sir Mustachio', {length: 2, width: 2, height: 2}, 15, 'The Round Table', ['Giant Sword', 'Shield'], 'Common Tongue');
+  //const swordsman = new Humanoid (new Date(), 'Sir Mustachio', {length: 2, width: 2, height: 2}, 15, 'The Round Table', ['Giant Sword', 'Shield'], 'Common Tongue');
 
-  /*const swordsman = new Humanoid({
+  const swordsman = new Humanoid({
     createdAt: new Date(),
     dimensions: {
       length: 2,
@@ -171,12 +172,12 @@ const mage = new Humanoid(new Date(), 'Bruce', {length: 2, width: 1, height: 1},
       'Shield',
     ],
     language: 'Common Tongue',
-  });*/
+  });
  
   //arguments are passed in the same order they appear in the constructor
-  const archer = new Humanoid(new Date(), 'Lilith', {length: 1, width: 2, height: 4}, 10,  'Forest Kingdom', ['Bow', 'Dagger'], 'Elvish');
+  //const archer = new Humanoid(new Date(), 'Lilith', {length: 1, width: 2, height: 4}, 10,  'Forest Kingdom', ['Bow', 'Dagger'], 'Elvish');
 
-  /*const archer = new Humanoid({
+  const archer = new Humanoid({
     createdAt: new Date(),
     dimensions: {
       length: 1,
@@ -191,7 +192,7 @@ const mage = new Humanoid(new Date(), 'Bruce', {length: 2, width: 1, height: 1},
       'Dagger',
     ],
     language: 'Elvish',
-  });*/
+  });
 
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }

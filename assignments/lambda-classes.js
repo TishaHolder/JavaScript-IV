@@ -97,7 +97,7 @@ class Student extends Person {
     }
 
     PRAssignment(subject){
-        console.log(`${this.name} has has submitted a pull request for ${subject}`);
+        console.log(`${this.name} has submitted a pull request for ${subject}`);
         
     }
 
